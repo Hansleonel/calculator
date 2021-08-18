@@ -11,13 +11,29 @@ class ResultLabels extends StatelessWidget {
     // en este caso CalculatorBloc y CalcultorState
     return BlocBuilder<CalculatorBloc, CalculatorState>(
       builder: (context, state) {
+        if (state.firstNumber == '0' && state.secondNumber == '0') {
+          return MainResultText(
+              text: state.mathResult.endsWith('.0')
+                  ? state.mathResult.substring(0, state.mathResult.length - 2)
+                  : state.mathResult);
+        }
+
         return Column(
           children: [
+            // como vemos en esta parte mostramos los valores que almacenamos en el state
+            // en este caso especificamos previamente que es de tipo CalculatorState
             SubResult(text: state.firstNumber),
             SubResult(text: state.operation),
-            SubResult(text: state.secondNumber),
+            SubResult(
+                text: state.secondNumber.endsWith('.0')
+                    ? state.secondNumber
+                        .substring(0, state.secondNumber.length - 2)
+                    : state.secondNumber),
             LineSeparator(),
-            MainResultText(text: state.mathResult),
+            MainResultText(
+                text: state.mathResult.endsWith('.0')
+                    ? state.mathResult.substring(0, state.mathResult.length - 2)
+                    : state.mathResult),
           ],
         );
       },
